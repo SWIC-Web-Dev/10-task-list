@@ -1,34 +1,96 @@
-# Node Template Repo
+# Task List
 
-This repo should provide a stable template for practicing learning JS as a programming language and just 🏃‍♂️ running code from the terminal via Node.
+## Refactor to Avoid Mutations
 
-## Getting Started
+Review the `addTag` code in `src/utils.js`. It mutates the `tags` array. Refactor the code to avoid mutations. You can see it working by 🏃🏾‍♂️ the code in `src/index.js`. Make sure that your updates don't break that existing functionality.
 
-Utilize your GitHub Classroom link or click the "Use this template" button to create a new repo. This will create a new repo with the same structure as this one on your GitHub account.
+## Resolve the Mutation Issue with `duplicateTask`
 
-Clone the repo to your local machine by clicking the green "Code" button. Normally, the easiest way to do this is the GitHub CLI, assuming that you have it installed. If not, you can download it [here](https://cli.github.com/). You also need to run `gh auth login` to authenticate your GitHub account. One other with the GitHub CLI is that you may have to restart your terminal after installing it.
+The purpose of this function is to allow us to...duplicate a task. We've tried to implement it. The task gets duplicted, but then it's also updated in the original task. Look at the logged codes and you'll see this:
 
-![Clone the repo with GitHub CLI](./clone.png)
+```shell
+{
+  id: 2,
+  title: 'Copy of Complete project proposal',
+  tags: [ 'work', 'planning', 'Urgent' ],
+  subtasks: [ 'research', 'outline', 'draft' ]
+} duplication
+{
+  id: 2,
+  title: 'Copy of Complete project proposal',
+  tags: [ 'work', 'planning', 'Urgent' ],
+  subtasks: [ 'research', 'outline', 'draft' ]
+} original
+```
 
-You'll copy the command by clicking the copy icon there ☝️. Navigate to your `Code` or `Dev` or whatever directory you have where you are keeping your code projects and paste the command in.
+The original should not get mutated! Fix this issue.
 
-⚠️ DO NOT clone a repo inside another repo. This will cause issues with git and you'll have to delete the inner repo to fix it. Make sure that you are in a directory that is not a git repo before cloning. To put it another way, if you see the annotation `(master)` or `(main)` in your terminal, you are in a git repo. You can check by running `git status`. If you see `fatal: not a git repository (or any of the parent directories): .git`, you are not in a git repo.
+## Fix Merged List
 
-So, again, make sure you are not in a git repo before cloning this repo. No nested repos, please 🙏:🏾.
+The `mergeTasks` function is supposed to merge two lists of tasks. It's not working as expected. The merged list should contain all the tasks from both lists. The tasks should be unique based on their `id`. If a task with the same `id` exists in both lists, the task from the second list should be used. Fix the function so that it works as expected.
 
-First, `cd` into the newly created repo. You can do `ls` to check for it and then type `cd` followed by at least the first few characters of the repo name. You will now have changed into the repo directory (it will probably show `(master)` or `(main)`.
+🏃🏾‍♂️ the code in `src/index.js` shows:
 
-Now, it's time to install the project's dependencies. You can do this by running `npm install` in the root of the project. This will install all the dependencies listed in the `package.json` file.
+```shell
+[
+  {
+    id: 2,
+    title: 'Copy of Complete project proposal',
+    tags: [ 'work', 'planning', 'Urgent' ],
+    subtasks: [ 'research', 'outline', 'draft' ]
+  },
+  {
+    id: 2,
+    title: 'Buy groceries',
+    tags: [ 'personal', 'shopping' ],
+    subtasks: [ 'make list', 'get bags' ]
+  },
+  {
+    id: 2,
+    title: 'Copy of Complete project proposal',
+    tags: [ 'work', 'planning', 'Urgent' ],
+    subtasks: [ 'research', 'outline', 'draft' ]
+  },
+  {
+    id: 2,
+    title: 'Buy groceries',
+    tags: [ 'personal', 'shopping' ],
+    subtasks: [ 'make list', 'get bags' ]
+  }
+] merge
+```
 
-Summarily, this checks the `package.json` file for the necessary `"dependencies"` and/or `"devDependencies"`. It communicates with the npm registry to download the necessary packages and install them in the `node_modules` directory. This directory is created in the root of the project and is where all the dependencies are stored. This directory is ignored 🙈 by Git because it is so bloated.
+Given the contents of our `db.js` it should look like this:
 
-Now, open the code up with `code .`. This runs the `code` command (for VS Code) and opens the current directory (`.`) in the editor.
+```shell
+[
+  {
+    id: 1,
+    title: "Complete project proposal",
+    tags: ["work", "planning"],
+    subtasks: ["research", "outline", "draft"],
+  },
+  {
+    id: 2,
+    title: "Buy groceries",
+    tags: ["personal", "shopping"],
+    subtasks: ["make list", "get bags"],
+  },
+  {
+    id: 3,
+    title: "Attend team meeting",
+    tags: ["work", "communication"],
+    subtasks: ["prepare", "participate"],
+  },
+  {
+    id: 4,
+    title: "Clean bathroom",
+    tags: ["personal", "cleaning"],
+    subtasks: ["scrub", "wipe"],
+  },
+]
+```
 
-You should see a `.vscode` directory in the root of the project. This directory contains the settings and extensions that are recommended for this project. You should see a notification in the bottom right corner of the editor that says "Recommended Extensions Found". Click "Install All" to install the recommended extensions.
-If you don't, then hopefully 🤞🏾 that means that you have already installed the extensions.
+## Add a New Task
 
-Check out the files - you'll see HTML, CSS, and JS files (if needed) in `src`.
-
-> Do what must be done.
-
-Write your code in `src`. Run your code with `node src/index.js` (or similar).
+Write a utility function that will...add a new task to a given task list. The function should take the task list and the new task as arguments. The new task should be added to the end of the list. The function should return the updated list.
